@@ -1,21 +1,7 @@
-#STEP-1: INSTALLING GIT JAVA-1.8.0 MAVEN
-yum install git java-1.8.0-openjdk maven -y
-
-#STEP-2: GETTING THE REPO (jenkins.io --> download -- > redhat)
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-
-#STEP-3: DOWNLOAD JAVA11 AND JENKINS
-sudo yum install java-17-amazon-corretto -y
-yum install jenkins -y
-update-alternatives --config java
-
-#STEP-4: RESTARTING JENKINS (when we download service it will on stopped state)
-systemctl start jenkins.service
-systemctl status jenkins.service
-
-
-#/browse with <IP>:8080
-Run in the server manually
-cat /var/lib/jenkins/secrets/initialAdminPassword
-give this passwd in jenkins login#/
+sudo apt update -y
+ sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.102/bin/apache-tomcat-9.0.102.tar.gz
+sudo apt install openjdk-17-jdk -y
+ sudo tar -zxvf apache-tomcat-9.0.102.tar.gz
+sudo vim webapps/manager/META-INF/context.xml #delete two lines 21 and 22
+ sudo vim conf/tomcat-users.xml #add user and passwd
+ sudo ./bin/startup.sh
