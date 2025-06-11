@@ -1,0 +1,43 @@
+pipeline {
+    agent {
+        label 'node1'
+    }
+    tools {
+    maven 'maven-3.9.6'  // the same name you gave in the UI
+    }
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/Venkatareddy1714/jenkins-java-project123.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('artifact') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('deploy') {
+            steps {
+                deploy adapters: [
+                    tomcat9(
+                        credentialsId: '376f31d8-ded4-4878-834f-2dd60664d96f',
+                        path: '',
+                        url: 'http://13.233.98.71:8080/'
+                    )
+                ],
+                contextPath: 'netflix',
+                war: 'target/*.war'
+            }
+        }
+    }
+}
